@@ -6,7 +6,7 @@ const URL =
 
 const puppeteerPage = async (optionValue) => {
   const datos = [];
-  const browser = await launch({ headless: false });
+  const browser = await launch({ headless: 'new' });
   const page = await browser.newPage();
   await page.setViewport({
     width: 800,
@@ -16,7 +16,7 @@ const puppeteerPage = async (optionValue) => {
   await page.goto(URL);
   await page.setCookie(Cookie1, Cookie2, Cookie3);
   await page.reload();
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  await new Promise((resolve) => setTimeout(resolve, 10000));
   await page.waitForSelector('#GrupoLineaId');
   await page.select(selectSelector, optionValue);
   await page.waitForSelector('#listado-productos-dg');
@@ -24,7 +24,7 @@ const puppeteerPage = async (optionValue) => {
   await page.waitForSelector('#listado-productos-dg');
   await page.select('#cboAlmacenes', '030');
   await page.waitForSelector('#listado-productos-dg');
-  await new Promise((resolve) => setTimeout(resolve, 6000));
+  await new Promise((resolve) => setTimeout(resolve, 12000));
   const alldata = await page.$$('.container-item-busc-dg .thumbnail');
   for (const data of alldata) {
     const nombre = await data.$eval('h5 a', (text) => text.innerHTML);
@@ -36,13 +36,18 @@ const puppeteerPage = async (optionValue) => {
       (text) => text.innerHTML
     );
     // todo en un objeto
+
+    const categoriaName = Object.keys(categoria).find((item) =>
+      nombre.includes(item)
+    );
+
     const item = {
       nombre,
       url: `https://www.deltron.com.pe/${url}`,
       img,
-      precio,
+      precio: precio.split(' ').pop(),
       minCode: minCode?.split('</span>').pop(),
-      categoria: categoria[nombre.split(' ').shift()],
+      categoria: categoria[categoriaName],
     };
     datos.push(item);
   }

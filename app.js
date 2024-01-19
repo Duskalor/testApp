@@ -7,7 +7,7 @@ connectDB()
     console.log('Connected BD');
     try {
       const data = await scrapping();
-      console.log(data);
+      console.log({ data });
       console.log(`cantidad de datos ${data.length}`);
       const insetedData = await productosModel.insertMany(data, {
         ordered: false,
