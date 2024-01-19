@@ -29,6 +29,7 @@ const Cookie3 = {
 
 const categoria = {
   SSD: 'disco',
+  PROC: 'procesador',
 };
 
 module.exports = { Cookie1, Cookie2, Cookie3, categoria };

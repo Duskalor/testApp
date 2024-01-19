@@ -6,13 +6,13 @@ const URL =
 
 const puppeteerPage = async (optionValue) => {
   const datos = [];
-  const browser = await launch({ headless: 'new' });
+  const browser = await launch({ headless: false });
   const page = await browser.newPage();
-  await page.setViewport({
-    width: 800,
-    height: 600,
-    deviceScaleFactor: 1,
-  });
+  // await page.setViewport({
+  //   width: 800,
+  //   height: 600,
+  //   deviceScaleFactor: 1,
+  // });
   await page.goto(URL);
   await page.setCookie(Cookie1, Cookie2, Cookie3);
   await page.reload();
