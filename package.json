@@ -1,0 +1,28 @@
+{
+  "name": "test-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --env-file=.env app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^8.1.0",
+    "node_extra_ca_certs_mozilla_bundle": "^1.0.5",
+    "puppeteer": "^21.7.0"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^9.1.0",
+    "standard": "^17.1.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/standard/eslintrc.json",
+      "prettier"
+    ]
+  }
+}
