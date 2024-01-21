@@ -1,21 +1,16 @@
-const scrapping = require('./scrapping');
 const productosModel = require('./model/productos');
 const { connectDB, connectClose } = require('./utils/db');
-const discos = 'HDES';
-const procesadores = 'CPU';
+const scrap = require('./newScrap');
 
 connectDB()
   .then(async () => {
     console.log('Connected BD');
     try {
-      const DataDiscos = await scrapping(discos);
-      const DataPro = await scrapping(procesadores);
-      console.log({ DataDiscos, DataPro });
+      const infoFromScrapping = await scrap();
+      const infoAplanada = infoFromScrapping.flat();
+      console.log(`cantidad de datos ${infoAplanada.length}`);
 
-      const AlldataScrapping = [...DataDiscos, ...DataPro];
-      console.log(`cantidad de datos ${AlldataScrapping.length}`);
-
-      const insetedData = await productosModel.insertMany(AlldataScrapping, {
+      const insetedData = await productosModel.insertMany(infoAplanada, {
         ordered: false,
       });
       console.log(`cantidad de información insertada: ${insetedData.length}`);

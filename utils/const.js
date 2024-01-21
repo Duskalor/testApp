@@ -1,3 +1,12 @@
+const categorias = {
+  Laptop: 'NBK',
+  Disco: 'HDES',
+  Procesador: 'CPU',
+  Monitores: 'MON',
+  'Placa madre': 'MBD',
+  'Memoria ram': 'MEM',
+};
+
 const Cookie1 = {
   name: 'clientinscrito',
   value: process.env.CLIENTE_INSCRITO,
@@ -17,6 +26,7 @@ const Cookie2 = {
   httpOnly: true, // Accesible solo a través de HTTP
   secure: false, // Cookie solo se envía a través de conexiones seguras (HTTPS)
 };
+
 const Cookie3 = {
   name: 'deltronlogin',
   value: process.env.DELTRON_LOGIN,
@@ -27,9 +37,4 @@ const Cookie3 = {
   secure: false, // Cookie solo se envía a través de conexiones seguras (HTTPS)
 };
 
-const categoria = {
-  SSD: 'disco',
-  PROC: 'procesador',
-};
-
-module.exports = { Cookie1, Cookie2, Cookie3, categoria };
+module.exports = { Cookie1, Cookie2, Cookie3, categorias };
