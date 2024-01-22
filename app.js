@@ -8,12 +8,13 @@ connectDB()
     try {
       const infoFromScrapping = await scrap();
       const infoAplanada = infoFromScrapping.flat();
+      console.log(infoAplanada);
       console.log(`cantidad de datos ${infoAplanada.length}`);
 
-      const insetedData = await productosModel.insertMany(infoAplanada, {
-        ordered: false,
-      });
-      console.log(`cantidad de información insertada: ${insetedData.length}`);
+      // const insetedData = await productosModel.insertMany(infoAplanada, {
+      //   ordered: false,
+      // });
+      // console.log(`cantidad de información insertada: ${insetedData.length}`);
     } catch (error) {
       // Captura el error de duplicados y maneja de manera adecuada
       if (error.code === 11000) {
