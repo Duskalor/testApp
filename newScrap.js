@@ -4,7 +4,7 @@ const URL =
   'https://www.deltron.com.pe/modulos/productos/items/ctBuscador/templates/buscador_web_v1.php';
 
 const scrap = async () => {
-  const browser = await launch({ headless: false });
+  const browser = await launch({ headless: 'new' });
   const dataFromWebScrapping = [];
   for (const [categoria, codigo] of Object.entries(categorias)) {
     console.log(`obteniendo datos de '${categoria}'`);
@@ -27,7 +27,7 @@ const scrap = async () => {
     );
     const alldata = await page.$$('.container-item-busc-dg .thumbnail');
     const datos = [];
-    for (const data of alldata.slice(0, 1)) {
+    for (const data of alldata) {
       const precioElement = await data.$(
         '.cont-prices-item div .cont-price-soles span'
       );
@@ -54,21 +54,30 @@ const scrap = async () => {
       );
       // Obtener la demás información
       const page2 = await browser.newPage();
-      await page2.goto(url);
 
-      // const cupon = await data.$('.cupon');
-      const cupon = page2.$$('.cupon span');
-      if (cupon) {
-        console.log(cupon);
-        cupon.click();
-      }
+      // desahabiliando cosas innecesarias
+      await page2.setJavaScriptEnabled(false);
+      await page2.setRequestInterception(true);
+      page2.on('request', (request) => {
+        if (
+          request.resourceType() === 'image' ||
+          request.resourceType() === 'stylesheet'
+        ) {
+          request.abort();
+        } else {
+          request.continue();
+        }
+      });
+      await page2.goto(url);
 
       const nombre = await page2.$eval(
         '.title-name-product',
         (text) => text.innerHTML
       );
-      const bigimg = await page2.$eval('.lslide img', (img) =>
-        img.getAttribute('src')
+      const imageGallery = await page2.$('#imageGallery');
+
+      const bigimg = await imageGallery.$$eval('li img', (imgs) =>
+        imgs.map((img) => img.getAttribute('src'))
       );
 
       await page2.close();
@@ -88,7 +97,7 @@ const scrap = async () => {
     dataFromWebScrapping.push(datos);
     page.close();
 
-    // await new Promise((resolve) => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 5000));
   }
   await browser.close();
   console.log('scrapping complete');
