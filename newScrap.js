@@ -27,7 +27,7 @@ const scrap = async () => {
     );
     const alldata = await page.$$('.container-item-busc-dg .thumbnail');
     const datos = [];
-    for (const data of alldata.slice(0, 5)) {
+    for (const data of alldata.slice(0, 1)) {
       const precioElement = await data.$(
         '.cont-prices-item div .cont-price-soles span'
       );
@@ -56,11 +56,20 @@ const scrap = async () => {
       const page2 = await browser.newPage();
       await page2.goto(url);
 
+      // const cupon = await data.$('.cupon');
+      const cupon = page2.$$('.cupon span');
+      if (cupon) {
+        console.log(cupon);
+        cupon.click();
+      }
+
       const nombre = await page2.$eval(
         '.title-name-product',
         (text) => text.innerHTML
       );
-      const bigimg = await page2.$eval('img', (img) => img.getAttribute('src'));
+      const bigimg = await page2.$eval('.lslide img', (img) =>
+        img.getAttribute('src')
+      );
 
       await page2.close();
       const item = {

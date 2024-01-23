@@ -1,6 +1,6 @@
 const categorias = {
-  // Laptop: 'NBK',
-  Disco: 'HDES',
+  Laptop: 'NBK',
+  // Disco: 'HDES',
   // Procesador: 'CPU',
   // Monitores: 'MON',
   // 'Placa madre': 'MBD',
