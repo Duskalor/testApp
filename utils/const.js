@@ -1,10 +1,10 @@
 const categorias = {
   Laptop: 'NBK',
-  Disco: 'HDES',
-  Procesador: 'CPU',
-  Monitores: 'MON',
-  'Placa madre': 'MBD',
-  'Memoria ram': 'MEM',
+  // Disco: 'HDES',
+  // Procesador: 'CPU',
+  // Monitores: 'MON',
+  // 'Placa madre': 'MBD',
+  // 'Memoria ram': 'MEM',
 };
 
 const Cookie1 = {
